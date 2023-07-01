@@ -70,6 +70,8 @@ static inline int getTerminalSize(int *row, int *col)
     *col = w.ws_col;
 #else // unknown system
     // do nothing
+    (void)row;
+    (void)col;
     return 1;
 #endif
     return 0;
