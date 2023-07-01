@@ -75,9 +75,8 @@ static inline int getTerminalSize(int *row, int *col)
     return 0;
 }
 
-
-#endif // end of ifndef __TERMSZ_H
-
 #ifdef __cplusplus
 }
 #endif // end of #ifdef __cplusplus
+
+#endif // end of ifndef __TERMSZ_H
