@@ -46,8 +46,8 @@ extern "C" {
 
 /**
  * @brief Get teminal size.
- * @param row Address of a variable to store the result of row.
- * @param col Address of a variable to store the result of col.
+ * @param row Address of a variable to store the result of row. Nullable.
+ * @param col Address of a variable to store the result of col. Nullable.
  * @return 0: success / 1: failed
  **/
 static inline int getTerminalSize(int *row, int *col)
@@ -58,16 +58,28 @@ static inline int getTerminalSize(int *row, int *col)
     {
         return 1; // failed
     }
-    *col = inf.srWindow.Right - inf.srWindow.Left + 1;
-    *row = inf.srWindow.Bottom - inf.srWindow.Top + 1;
+    if (row != NULL)
+    {
+        *row = inf.srWindow.Bottom - inf.srWindow.Top + 1;
+    }
+    if (col != NULL)
+    {
+        *col = inf.srWindow.Right - inf.srWindow.Left + 1;
+    }
 #elif TSZ_SYS == TSZ_SYS_UNIX || TSZ_SYS == TSZ_SYS_MAC // UNIX, Mac
     struct winsize w;
     if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w))
     {
         return 1; // failed
     }
-    *row = w.ws_row;
-    *col = w.ws_col;
+    if (row != NULL)
+    {
+        *row = w.ws_row;
+    }
+    if (col != NULL)
+    {
+        *col = w.ws_col;
+    }
 #else // unknown system
     // do nothing
     (void)row;
