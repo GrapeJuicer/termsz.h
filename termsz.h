@@ -50,7 +50,7 @@ extern "C" {
  * @param col Address of a variable to store the result of col.
  * @return 0: success / 1: failed
  **/
-int getTerminalSize(int *row, int *col)
+static inline int getTerminalSize(int *row, int *col)
 {
 #if TSZ_SYS == TSZ_SYS_WIN32 // Windows
     CONSOLE_SCREEN_BUFFER_INFO inf;
@@ -70,14 +70,15 @@ int getTerminalSize(int *row, int *col)
     *col = w.ws_col;
 #else // unknown system
     // do nothing
+    (void)row;
+    (void)col;
     return 1;
 #endif
     return 0;
 }
 
-
-#endif // end of ifndef __TERMSZ_H
-
 #ifdef __cplusplus
 }
 #endif // end of #ifdef __cplusplus
+
+#endif // end of ifndef __TERMSZ_H
